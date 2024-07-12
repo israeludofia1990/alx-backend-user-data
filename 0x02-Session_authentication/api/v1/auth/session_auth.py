@@ -7,6 +7,6 @@ from models.user import User
 from typing import TypeVar, Tuple
 
 
-class session(auth):
+class SessionAuth(Auth):
     '''session auth'''
     pass
