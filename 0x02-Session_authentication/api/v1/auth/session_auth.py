@@ -9,3 +9,4 @@ from typing import TypeVar, Tuple
 
 class session(auth):
     '''session auth'''
+    pass
