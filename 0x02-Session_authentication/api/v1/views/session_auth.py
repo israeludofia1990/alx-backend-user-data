@@ -40,6 +40,7 @@ def session_login() -> str:
     user_dict.set_cookie(cookie_response, session_id)
     return user_dict
 
+
 @app_views.route(
     '/auth_session/logout',
     methods=['DELETE'],
