@@ -25,3 +25,20 @@ class SessionAuth(Auth):
         if session_id is None or not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id, None)
+
+    def current_user(self, request=None):
+        """ Returns User based cookie value """
+        cookie = self.session_cookie(request)
+        session_user_id = self.user_id_for_session_id(cookie)
+        user_id = User.get(session_user_id)
+        return user_id
+
+    def destroy_session(self, request=None):
+        """ Deletes user session / login(out) """
+        cookie_data = self.session_cookie(request)
+        if cookie_data is None:
+            return False
+        if not self.user_id_for_session_id(cookie_data):
+            return False
+        del self.user_id_by_session_id[cookie_data]
+        return True
