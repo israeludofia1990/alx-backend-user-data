@@ -6,7 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
-from sqlalchemy.exc import NoResultFound, InvalidRequestError
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -16,11 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        '''self._engine = create_engine("sqlite:///a.db", echo=True)'''
-        self._engine = create_engine(
-                "mysql+mysqldb://root:root@localhost:3306/User_auth",
-                echo=True
-                )
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
