@@ -3,7 +3,7 @@
 import bcrypt
 import uuid
 from db import DB
-from user import User
+from user import Users
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -35,7 +35,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(self, email: str, password: str) -> Users:
         """Takes mandatory string (email, password) arguments
         Returns a User object
         Raise ValueError if exists

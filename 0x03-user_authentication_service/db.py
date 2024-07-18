@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from user import Base, User
+from user import Base, Users
 from sqlalchemy.exc import NoResultFound, InvalidRequestError
 
 
@@ -34,7 +34,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> User:
+    def add_user(self, email: str, hashed_password: str) -> Users:
         """Add a new user to the database.
 
         Args:
@@ -44,12 +44,12 @@ class DB:
         Returns:
             User: The newly created user object.
         """
-        current_user = User(email=email, hashed_password=hashed_password)
+        current_user = Users(email=email, hashed_password=hashed_password)
         self._session.add(current_user)
         self._session.commit()
         return current_user
 
-    def find_user_by(self, **kwargs) -> User:
+    def find_user_by(self, **kwargs) -> Users:
         """Find a user by arbitrary keyword arguments.
 
         Args:
@@ -67,7 +67,7 @@ class DB:
         for key in kwargs.keys():
             if key not in user_keys:
                 raise InvalidRequestError
-        result = self._session.query(User).filter_by(**kwargs).first()
+        result = self._session.query(Users).filter_by(**kwargs).first()
         if result is None:
             raise NoResultFound
         return result
